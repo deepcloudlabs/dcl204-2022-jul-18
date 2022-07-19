@@ -1,7 +1,9 @@
 package com.example.banking.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Customer {
 	// 1) attributes -> information hiding: private + getter->immutable
@@ -28,10 +30,29 @@ public class Customer {
 		return identityNo;
 	}
 
-	public List<Account> getAccounts() { // violates information hiding principle
-		return accounts;
+	public List<Account> getAccounts() { 
+		return Collections.unmodifiableList(accounts); // immutable
+		// return accounts; // violates information hiding principle
 	}
 
 	// 4. business method
-
+	public void addAccount(Account account) {
+		this.accounts.add(account);
+	}
+	
+	public Account removeAccount(String iban) {
+		Account account = getAccount(iban);
+		if (Objects.nonNull(account))
+			accounts.remove(account);
+		return account;
+	}
+	
+	public Account getAccount(String iban) {
+		for (Account account : accounts) {
+			if (account.getIban().equals(iban)) {
+				return account;	
+			}
+		}
+		return null;
+	}
 }

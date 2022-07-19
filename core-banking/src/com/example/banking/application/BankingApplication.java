@@ -1,6 +1,7 @@
 package com.example.banking.application;
 
 import com.example.banking.domain.Account;
+import com.example.banking.domain.Customer;
 
 // Ctrl + Shift + F
 // Ctrl + Shift + O
@@ -24,5 +25,10 @@ public class BankingApplication {
 		//  i) Stack/local/temporary variable
 		// ii) value-typed variable -> int (primitive type)	
 		int age = 42;
+		
+		var jack = new Customer("1", "jack bauer");
+		jack.getAccounts().clear();
+		jack.getAccounts().add(new Account("tr1",10_000));
+		System.out.println(jack.getAccounts().size());
 	}
 }
