@@ -2,6 +2,7 @@ package com.example;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class StudyWrapperClasses {
 
 	public static void main(String[] args) {

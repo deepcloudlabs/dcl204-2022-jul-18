@@ -6,6 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import com.example.banking.domain.Account;
 import com.example.banking.domain.CheckingAccount;
 
+@SuppressWarnings("unused")
 public class StudyPolymorphism {
 
 	public static void main(String[] args) {
