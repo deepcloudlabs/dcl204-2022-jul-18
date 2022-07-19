@@ -3,7 +3,7 @@ package com.example.banking.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 public class Customer {
 	// 1) attributes -> information hiding: private + getter->immutable
@@ -40,19 +40,19 @@ public class Customer {
 		this.accounts.add(account);
 	}
 	
-	public Account removeAccount(String iban) {
-		Account account = getAccount(iban);
-		if (Objects.nonNull(account))
-			accounts.remove(account);
-		return account;
+	public Optional<Account> removeAccount(String iban) {
+		var optionalAccount = getAccount(iban);
+		if (optionalAccount.isPresent())
+			accounts.remove(optionalAccount.get());
+		return optionalAccount;
 	}
 	
-	public Account getAccount(String iban) {
+	public Optional<Account> getAccount(String iban) {
 		for (Account account : accounts) {
 			if (account.getIban().equals(iban)) {
-				return account;	
+				return Optional.of(account);	
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
 }

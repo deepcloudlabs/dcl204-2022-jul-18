@@ -27,8 +27,12 @@ public class BankingApplication {
 		int age = 42;
 		
 		var jack = new Customer("1", "jack bauer");
-		jack.getAccounts().clear();
-		jack.getAccounts().add(new Account("tr1",10_000));
+		jack.addAccount(new Account("tr1", 10_000));
+		jack.addAccount(new Account("tr2", 20_000));
+		jack.addAccount(new Account("tr3", 30_000));
 		System.out.println(jack.getAccounts().size());
+		jack.removeAccount("tr4")
+		    .ifPresent( account -> account.withdraw(account.getBalance()));
+		
 	}
 }
