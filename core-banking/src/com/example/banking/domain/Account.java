@@ -11,7 +11,7 @@ public class Account extends Object { // DDD -> Entity
 	// i) instance variable (Heap) ii) reference variable
 	private final String iban; 
 	// i) instance variable (Heap) ii) value-typed variable
-	private double balance; 
+	protected double balance; 
 	// public methods
 	// 2 Overloaded (1) Constructors
 	public Account(String iban, double balance) {
@@ -40,6 +40,7 @@ public class Account extends Object { // DDD -> Entity
 	}
 	
 	public boolean withdraw(double amount) {
+		System.err.println("Account::withdraw");
 		// validation
 		if (amount <= 0.0) return false;
 		// business rule
