@@ -1,5 +1,7 @@
 package com.example;
 
+import java.math.BigDecimal;
+
 public class StudyFloatingPointTypes {
 
 	@SuppressWarnings("unused")
@@ -23,7 +25,10 @@ public class StudyFloatingPointTypes {
 		
 		double inf = 1/0.0;
 		System.out.println("inf=%f".formatted(inf));
-				
+		
+		BigDecimal bd = BigDecimal.valueOf(2.0);
+		bd = bd.subtract(BigDecimal.valueOf(1.1));
+		System.out.println(bd.toString());		
 	}
 
 }

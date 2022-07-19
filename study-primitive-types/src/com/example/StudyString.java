@@ -6,7 +6,7 @@ public class StudyString {
 		// Immutable
 		String name1 = new String("jack"); // GC -> Heap
 		String name2 = "jack"; // Constant/Object Pool
-		String name3 = "jack";
+		String name3 = "jack"; // static string
 		name1 = name1.intern();
 		System.out.println("name1==name2 ? "+(name1==name2)); // false
 		System.out.println("name1==name2 ? "+(name1.equals(name2))); // true

@@ -48,7 +48,9 @@ class AccountTest { // CUT (Class Under Test) -> Account
 	@DisplayName("toString() should i) start with Account ii) contain iban= and balance= ")
 	@ParameterizedTest 
 	@CsvSource({
-		"tr1", "tr2", "tr3"	
+		"tr1", 
+		"tr2", 
+		"tr3"	
 	})
 	void toStringTest(String iban) throws Exception {
 		// 1. fixture/setup
