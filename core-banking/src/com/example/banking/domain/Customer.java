@@ -48,11 +48,26 @@ public class Customer {
 	}
 	
 	public Optional<Account> getAccount(String iban) {
-		for (Account account : accounts) {
+		for (var account : accounts) {
 			if (account.getIban().equals(iban)) {
 				return Optional.of(account);	
 			}
 		}
 		return Optional.empty();
+	}
+	public Account findAccount(String iban) {
+		for (var account : accounts) {
+			if (account.getIban().equals(iban)) {
+				return account;	
+			}
+		}
+		return null;
+	}
+	public double getTotalBalance() {
+		var sum = 0.0;
+		for (var account : accounts) {
+			sum += account.getBalance();
+		}
+		return sum;
 	}
 }

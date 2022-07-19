@@ -10,7 +10,7 @@ public class BankingApplication {
 	public static void main(String[] args) {
 		//  i) Automatic/Stack/local/temporary variable
 		// ii) reference variable -> Account	
-		Account acc = new Account("tr1", 10_000); 
+		var acc = new Account("tr1", 10_000); 
 		              // Heap Object
 		System.out.println(acc.toString());
 		acc.deposit(5_000);
@@ -24,7 +24,7 @@ public class BankingApplication {
 		
 		//  i) Stack/local/temporary variable
 		// ii) value-typed variable -> int (primitive type)	
-		int age = 42;
+		var age = 42;
 		
 		var jack = new Customer("1", "jack bauer");
 		jack.addAccount(new Account("tr1", 10_000));
@@ -33,6 +33,10 @@ public class BankingApplication {
 		System.out.println(jack.getAccounts().size());
 		jack.removeAccount("tr4")
 		    .ifPresent( account -> account.withdraw(account.getBalance()));
-		
+		var account = jack.findAccount("tr5");
+		// if (account != null)
+		   account.withdraw(1_000);
+		jack.getAccount("tr5")
+		    .ifPresent( hesap -> hesap.withdraw(1_000));
 	}
 }
