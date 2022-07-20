@@ -1,10 +1,19 @@
 package com.example.banking.domain;
+// final
+// 1. (instance/local) variable -> read-only variable
+// 2. class/method -> cannot extend class/cannot override method
+      // since java se 17, sealed
 
 // Ctrl + Shift + +
 // Alt + Shift + S
 // DDD (Domain-Driven Design)
 // class -> encapsulation
 public class Account extends Object { // DDD -> Entity
+	private static int count = 0;
+	
+	public static int getCount() {
+		return count ;
+	}
 	// members: attribute + method
 	// attributes -> state -> information hiding
 	// identity
@@ -12,9 +21,19 @@ public class Account extends Object { // DDD -> Entity
 	private final String iban; 
 	// i) instance variable (Heap) ii) value-typed variable
 	protected double balance; 
+	private AccountStatus status = AccountStatus.ACTIVE;
+	
+
+	public AccountStatus getStatus() {
+		return status;
+	}
+	public void setStatus(AccountStatus status) {
+		this.status = status;
+	}
 	// public methods
 	// 2 Overloaded (1) Constructors
 	public Account(String iban, double balance) {
+		count++;
 		this.iban = iban;
 		this.balance = balance;
 	}
@@ -31,7 +50,7 @@ public class Account extends Object { // DDD -> Entity
 	}
 	
 	// (3) business methods
-	public boolean deposit(double amount) {
+	public final boolean deposit(final double amount) {
 		// validation
 		if (amount <= 0.0) return false;
 		// this.balance = this.balance + amount;
@@ -39,7 +58,7 @@ public class Account extends Object { // DDD -> Entity
 		return true;
 	}
 	
-	public boolean withdraw(double amount) {
+	public boolean withdraw(final double amount) {
 		System.err.println("Account::withdraw");
 		// validation
 		if (amount <= 0.0) return false;

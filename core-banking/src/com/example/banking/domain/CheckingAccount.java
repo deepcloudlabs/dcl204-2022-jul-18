@@ -17,11 +17,12 @@ public class CheckingAccount extends Account { // Single Inheritance
 	public boolean withdraw(double amount) {
 		System.err.println("CheckingAccount::withdraw");
 		if (amount <= 0.0) return false;
-		if (amount > (balance + overdraftAmount)) return false;
+		final double maxBalance = balance + overdraftAmount;
+		if (amount > maxBalance) return false;
 		this.balance -= amount;
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "CheckingAccount [overdraftAmount=" + overdraftAmount + ", balance=" + balance + ", iban="

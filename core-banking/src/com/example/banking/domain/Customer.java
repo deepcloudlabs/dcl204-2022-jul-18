@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class Customer {
+public final class Customer {
 	// 1) attributes -> information hiding: private + getter->immutable
 	private final String identityNo;
 	private String fullName;

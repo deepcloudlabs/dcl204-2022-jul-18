@@ -8,6 +8,7 @@ import com.example.banking.domain.Customer;
 public class BankingApplication {
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
+		System.out.println("Number of accounts is %d".formatted(Account.getCount()));
 		//  i) Automatic/Stack/local/temporary variable
 		// ii) reference variable -> Account	
 		var acc = new Account("tr1", 10_000); 
@@ -35,8 +36,9 @@ public class BankingApplication {
 		    .ifPresent( account -> account.withdraw(account.getBalance()));
 		var account = jack.findAccount("tr5");
 		// if (account != null)
-		   account.withdraw(1_000);
+		//   account.withdraw(1_000);
 		jack.getAccount("tr5")
 		    .ifPresent( hesap -> hesap.withdraw(1_000));
+		System.out.println("Number of accounts is %d".formatted(Account.getCount()));
 	}
 }
