@@ -4,6 +4,8 @@ package com.example.banking.domain;
 // 2. class/method -> cannot extend class/cannot override method
       // since java se 17, sealed
 
+import com.example.banking.domain.exception.InsufficientBalanceException;
+
 // Ctrl + Shift + +
 // Alt + Shift + S
 // DDD (Domain-Driven Design)
@@ -50,23 +52,27 @@ public class Account extends Object { // DDD -> Entity
 	}
 	
 	// (3) business methods
-	public final boolean deposit(final double amount) {
-		// validation
-		if (amount <= 0.0) return false;
+	public final double deposit(final double amount) throws IllegalArgumentException {
+		// validation 
+		if (amount <= 0.0) 
+			throw new IllegalArgumentException("Amount must be positive");
 		// this.balance = this.balance + amount;
 		this.balance += amount;
-		return true;
+		return balance;
 	}
 	
-	public boolean withdraw(final double amount) {
+	public double withdraw(final double amount) throws InsufficientBalanceException {
 		System.err.println("Account::withdraw");
 		// validation
-		if (amount <= 0.0) return false;
+		if (amount <= 0.0) 
+			throw new IllegalArgumentException("Amount must be positive");
 		// business rule
-		if (amount > this.balance) return false;
+		if (amount > this.balance) 
+			throw new InsufficientBalanceException(
+					"Your balance does not cover expenses",amount-balance);
 		//this.balance = this.balance - amount;
 		this.balance -= amount;
-		return true;
+		return balance;
 	}
 	
 	@Override

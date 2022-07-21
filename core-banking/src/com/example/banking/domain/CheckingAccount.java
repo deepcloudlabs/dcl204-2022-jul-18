@@ -1,4 +1,7 @@
 package com.example.banking.domain;
+
+import com.example.banking.domain.exception.InsufficientBalanceException;
+
 // Account         -> super-class / base class
 // CheckingAccount -> sub-class   / derived class
 public class CheckingAccount extends Account { // Single Inheritance
@@ -14,13 +17,16 @@ public class CheckingAccount extends Account { // Single Inheritance
 	}
 
 	@Override
-	public boolean withdraw(double amount) {
+	public double withdraw(double amount) throws InsufficientBalanceException {
 		System.err.println("CheckingAccount::withdraw");
-		if (amount <= 0.0) return false;
+		if (amount <= 0.0) 
+			throw new IllegalArgumentException("Amount must be positive");
 		final double maxBalance = balance + overdraftAmount;
-		if (amount > maxBalance) return false;
+		if (amount > maxBalance) 
+			throw new InsufficientBalanceException(
+					"Your balance does not cover expenses",amount-maxBalance);			
 		this.balance -= amount;
-		return true;
+		return balance;
 	}
 	
 	@Override

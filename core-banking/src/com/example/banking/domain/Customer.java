@@ -1,15 +1,15 @@
 package com.example.banking.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public final class Customer {
 	// 1) attributes -> information hiding: private + getter->immutable
 	private final String identityNo;
 	private String fullName;
-	private List<Account> accounts = new ArrayList<>();
+	private Map<String, Account> accounts = new HashMap<>();
 
 	// 2) constructors
 	public Customer(String identityNo, String fullName) {
@@ -30,44 +30,29 @@ public final class Customer {
 		return identityNo;
 	}
 
-	public List<Account> getAccounts() { 
-		return Collections.unmodifiableList(accounts); // immutable
+	public List<Account> getAccounts() {
+		return accounts.values().stream().toList(); // immutable
 		// return accounts; // violates information hiding principle
 	}
 
 	// 4. business method
 	public void addAccount(Account account) {
-		this.accounts.add(account);
+		this.accounts.put(account.getIban(), account);
 	}
-	
+
 	public Optional<Account> removeAccount(String iban) {
-		var optionalAccount = getAccount(iban);
-		if (optionalAccount.isPresent())
-			accounts.remove(optionalAccount.get());
-		return optionalAccount;
+		return Optional.ofNullable(accounts.remove(iban));
 	}
-	
+
 	public Optional<Account> getAccount(String iban) {
-		for (var account : accounts) {
-			if (account.getIban().equals(iban)) {
-				return Optional.of(account);	
-			}
-		}
-		return Optional.empty();
+		return Optional.ofNullable(accounts.get(iban));
 	}
+
 	public Account findAccount(String iban) {
-		for (var account : accounts) {
-			if (account.getIban().equals(iban)) {
-				return account;	
-			}
-		}
-		return null;
+		return accounts.get(iban);
 	}
+
 	public double getTotalBalance() {
-		var sum = 0.0;
-		for (var account : accounts) {
-			sum += account.getBalance();
-		}
-		return sum;
+		return accounts.values().stream().mapToDouble(Account::getBalance).sum();
 	}
 }

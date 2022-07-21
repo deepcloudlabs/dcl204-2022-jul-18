@@ -2,7 +2,7 @@ package com.example.banking.domain;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +12,8 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import com.example.banking.domain.exception.InsufficientBalanceException;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AccountTest { // CUT (Class Under Test) -> Account
@@ -74,10 +76,11 @@ class AccountTest { // CUT (Class Under Test) -> Account
 	void withdrawWithNegativeAmountShouldFail(String iban, double balance, double amount) throws Exception {
 		// 1. fixture/setup
 		var account = new Account(iban, balance);
-		// 2. call exercise method
-		var result = account.withdraw(amount);
 		// 3. verification
-		assertAll(() -> assertFalse(result), () -> assertEquals(balance, account.getBalance(), Double.MIN_NORMAL));
+		assertAll(
+			() -> assertThrows(IllegalArgumentException.class, () -> account.withdraw(amount)),
+			() -> assertEquals(balance, account.getBalance(), Double.MIN_NORMAL)
+		);
 		// 4. destroy setup
 	}
 
@@ -91,9 +94,11 @@ class AccountTest { // CUT (Class Under Test) -> Account
 		// 1. fixture/setup
 		var account = new Account(iban, balance);
 		// 2. call exercise method
-		var result = account.withdraw(amount);
 		// 3. verification
-		assertAll(() -> assertFalse(result), () -> assertEquals(balance, account.getBalance(), Double.MIN_NORMAL));
+		assertAll(
+			() -> assertThrows(InsufficientBalanceException.class,() -> account.withdraw(amount)), 
+			() -> assertEquals(balance, account.getBalance(), Double.MIN_NORMAL)
+		);
 		// 4. destroy setup
 	}
 	
@@ -109,7 +114,7 @@ class AccountTest { // CUT (Class Under Test) -> Account
 		// 2. call exercise method
 		var result = account.withdraw(balance);
 		// 3. verification
-		assertAll(() -> assertTrue(result), () -> assertEquals(0.0, account.getBalance(), Double.MIN_NORMAL));
+		assertEquals(0.0,result, Double.MIN_NORMAL);
 		// 4. destroy setup
 	}
 
@@ -123,9 +128,11 @@ class AccountTest { // CUT (Class Under Test) -> Account
 		// 1. fixture/setup
 		var account = new Account(iban, balance);
 		// 2. call exercise method
-		var result = account.deposit(amount);
 		// 3. verification
-		assertAll(() -> assertFalse(result), () -> assertEquals(balance, account.getBalance(), Double.MIN_NORMAL));
+		assertAll(
+			() -> assertThrows(IllegalArgumentException.class,() -> account.deposit(amount)), 
+			() -> assertEquals(balance, account.getBalance(), Double.MIN_NORMAL)
+		);
 		// 4. destroy setup
 	}
 	
@@ -141,7 +148,7 @@ class AccountTest { // CUT (Class Under Test) -> Account
 		// 2. call exercise method
 		var result = account.deposit(amount);
 		// 3. verification
-		assertAll(() -> assertTrue(result), () -> assertEquals(finalBalance, account.getBalance(), Double.MIN_NORMAL));
+		assertEquals(finalBalance,result, Double.MIN_NORMAL);
 		// 4. destroy setup
 	}
 }
