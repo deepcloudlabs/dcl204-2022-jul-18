@@ -2,7 +2,6 @@ package com.example.aspect;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.util.Date;
 
 public class ProfilingAspect implements InvocationHandler {
 	private final Object target;
